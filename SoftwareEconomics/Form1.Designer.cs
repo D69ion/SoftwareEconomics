@@ -237,10 +237,10 @@
             // 
             // textBoxResult
             // 
-            this.textBoxResult.Location = new System.Drawing.Point(365, 409);
+            this.textBoxResult.Location = new System.Drawing.Point(365, 398);
             this.textBoxResult.Multiline = true;
             this.textBoxResult.Name = "textBoxResult";
-            this.textBoxResult.Size = new System.Drawing.Size(298, 101);
+            this.textBoxResult.Size = new System.Drawing.Size(298, 112);
             this.textBoxResult.TabIndex = 13;
             // 
             // Form1

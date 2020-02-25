@@ -21,13 +21,30 @@ namespace SoftwareEconomics
         {
             //label2.Text = dataGridView1.Rows[3].Cells[0].Value.ToString();
             CreateDataGrids();
-            int res = 0;
+            int pz = 0;
             for (int i = 0; i < 13; i++)
             {
-                res += Convert.ToInt32(dataGridView2.Rows[i].Cells[1].Value);
+                pz += Convert.ToInt32(dataGridView2.Rows[i].Cells[1].Value);
             }
-            textBoxResult.Text += "Прямые затраты (ПЗ) = " + res + Environment.NewLine;
+            textBoxResult.Text += "Прямые затраты (ПЗ) = " + pz + Environment.NewLine;
 
+            double spg = Convert.ToInt32(dataGridView3.Rows[0].Cells[1].Value) *
+                (Convert.ToDouble(dataGridView3.Rows[1].Cells[1].Value) / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value)) *
+                (Convert.ToInt32(dataGridView3.Rows[3].Cells[1].Value) * 12);
+            textBoxResult.Text += "Ежегодные затраты пользователей на ИС (Спг) = " + spg.ToString("F" + 4) + Environment.NewLine;
+
+            double spr = (Convert.ToDouble(dataGridView5.Rows[0].Cells[1].Value) + Convert.ToDouble(dataGridView5.Rows[1].Cells[1].Value)) *
+                Convert.ToInt32(dataGridView5.Rows[2].Cells[1].Value) * Convert.ToInt32(dataGridView4.Rows[2].Cells[1].Value);
+            textBoxResult.Text += "Ежегодные расходы на простои системы (Спр) = " + spr.ToString("F" + 4) + Environment.NewLine;
+
+            double kz = spg + spr;
+            textBoxResult.Text += "Косвенные затраты (Кз) = " + kz.ToString("F" + 4) + Environment.NewLine;
+
+            double tso = pz + kz;
+            textBoxResult.Text += "ТСО = " + tso.ToString("F" + 4) + Environment.NewLine;
+
+            tso /= Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
+            textBoxResult.Text += "ТСО в расчете на один ПК = " + tso.ToString("F" + 4) + Environment.NewLine;
         }
 
         private void CreateDataGrids()
@@ -98,12 +115,11 @@ namespace SoftwareEconomics
             //вычисление промежуточных показателей
             dataGridView5.RowCount = 3;
             dataGridView5.Rows[0].Cells[0].Value = "Часовая оплата пользователя, руб./ч, ЧОп";
-            dataGridView5.Rows[0].Cells[1].Value = Convert.ToDouble(dataGridView3.Rows[1].Cells[1].Value) / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value);
+            dataGridView5.Rows[0].Cells[1].Value = (Convert.ToDouble(dataGridView3.Rows[1].Cells[1].Value) / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value)).ToString("F" + 4);
             dataGridView5.Rows[1].Cells[0].Value = "Доход на каждого работника, руб./ч, Чд";
-            dataGridView5.Rows[1].Cells[1].Value = Convert.ToDouble(dataGridView4.Rows[3].Cells[1].Value) / 12.0 / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value) / Convert.ToDouble(dataGridView3.Rows[0].Cells[1].Value);
+            dataGridView5.Rows[1].Cells[1].Value = (Convert.ToDouble(dataGridView4.Rows[3].Cells[1].Value) / 12.0 / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value) / Convert.ToDouble(dataGridView3.Rows[0].Cells[1].Value)).ToString("F" + 4);
             dataGridView5.Rows[2].Cells[0].Value = "Простои, часов в год, Гп";
             dataGridView5.Rows[2].Cells[1].Value = Convert.ToInt32(dataGridView4.Rows[0].Cells[1].Value) * Convert.ToInt32(dataGridView4.Rows[1].Cells[1].Value) * 12;
-
         }
     }
 }
