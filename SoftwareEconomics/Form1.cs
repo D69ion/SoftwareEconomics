@@ -19,7 +19,7 @@ namespace SoftwareEconomics
         }
         private void buttonCalc_Click(object sender, EventArgs e)
         {
-            double npv = NPV();
+            double npv = NPV(Convert.ToDouble(dataGridView1.Rows[2].Cells[1].Value));
             textBoxResult.Text += "NPV = " + npv.ToString("F" + 4) + Environment.NewLine;
             double roi = ROI(npv);
             textBoxResult.Text += "ROI = " + roi.ToString("F" + 4) + Environment.NewLine;
@@ -27,29 +27,41 @@ namespace SoftwareEconomics
             textBoxResult.Text += "PI = " + pi.ToString("F" + 4) + Environment.NewLine;
 
             dataGridView2.RowCount = 3;
+            dataGridView2.ColumnCount = 1; //Convert.ToInt32(dataGridView1.Rows[2].Cells[1].Value) + 1;
             dataGridView2.Rows[0].Cells[0].Value = "Денежный поток";
             dataGridView2.Rows[1].Cells[0].Value = "Дисконтированный денежный поток";
             dataGridView2.Rows[2].Cells[0].Value = "Накопленный денежный поток";
+            for (int i = 0; i < Convert.ToInt32(dataGridView1.Rows[2].Cells[1].Value) + 1; i++)
+            {
+                DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                column.HeaderText = i + " год";
+                dataGridView2.Columns.Add(column);
+            }
             //0 год
-            dataGridView2.Rows[0].Cells[1].Value = -(int)dataGridView1.Rows[0].Cells[1].Value;
-            dataGridView2.Rows[1].Cells[1].Value = -(int)dataGridView1.Rows[0].Cells[1].Value;
-            dataGridView2.Rows[2].Cells[1].Value = -(int)dataGridView1.Rows[0].Cells[1].Value;
+            dataGridView2.Rows[0].Cells[1].Value = dataGridView2.Rows[1].Cells[1].Value = dataGridView2.Rows[2].Cells[1].Value = -Convert.ToInt32(dataGridView1.Rows[0].Cells[1].Value);
             //1 год
             dataGridView2.Rows[0].Cells[2].Value = CFk(0);
             double r = Convert.ToDouble(dataGridView2.Rows[0].Cells[2].Value) / Math.Pow((1 + Convert.ToDouble(dataGridView1.Rows[2].Cells[1].Value) / 100), 1);
             dataGridView2.Rows[1].Cells[2].Value = r.ToString("F" + 4);
             dataGridView2.Rows[2].Cells[2].Value = (-(Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value)) + r).ToString("F" + 4);
-            //2 год
-            dataGridView2.Rows[0].Cells[3].Value = CFk(1);
-            r = Convert.ToDouble(dataGridView2.Rows[0].Cells[3].Value) / Math.Pow((1 + Convert.ToDouble(dataGridView1.Rows[2].Cells[1].Value) / 100), 2);
-            dataGridView2.Rows[1].Cells[3].Value = r.ToString("F" + 4);
-            dataGridView2.Rows[2].Cells[3].Value = (Convert.ToDouble(dataGridView2.Rows[2].Cells[2].Value) + r).ToString("F" + 4);
-            //3 год
-            dataGridView2.Rows[0].Cells[4].Value = CFk(2);
-            r = Convert.ToDouble(dataGridView2.Rows[0].Cells[4].Value) / Math.Pow((1 + Convert.ToDouble(dataGridView1.Rows[2].Cells[1].Value) / 100), 3);
-            dataGridView2.Rows[1].Cells[4].Value = r.ToString("F" + 4);
-            dataGridView2.Rows[2].Cells[4].Value = (Convert.ToDouble(dataGridView2.Rows[2].Cells[3].Value) + r).ToString("F" + 4);
-            textBoxResult.Text+= (2 + Math.Abs(Convert.ToDouble(dataGridView2.Rows[2].Cells[2].Value)) / Convert.ToDouble(dataGridView2.Rows[1].Cells[3].Value)).ToString();
+            //2 и далее годы
+            int year = 0;
+            for (int i = 3; i < dataGridView2.ColumnCount; i++)
+            {
+                dataGridView2.Rows[0].Cells[i].Value = CFk(i - 2);
+                r = Convert.ToDouble(dataGridView2.Rows[0].Cells[i].Value) / Math.Pow((1 + Convert.ToDouble(dataGridView1.Rows[2].Cells[1].Value) / 100), i);
+                dataGridView2.Rows[1].Cells[i].Value = r.ToString("F" + 4);
+                npv = Convert.ToDouble(dataGridView2.Rows[2].Cells[i - 1].Value) + r;
+                dataGridView2.Rows[2].Cells[i].Value = npv.ToString("F" + 4);
+                if (npv > 0)
+                    year = i - 1;
+            }
+            //срок окупаемости РВР
+            textBoxResult.Text += "PBP = " + (year - 1 + Math.Abs(Convert.ToDouble(dataGridView2.Rows[2].Cells[year - 1].Value)) / Convert.ToDouble(dataGridView2.Rows[1].Cells[year].Value)).ToString("F" + 2) + Environment.NewLine;
+
+            //IRR
+            textBoxResult.Text += "IRR = " + Math.Round(IRR(), 7);
         }
 
         private double PI()
@@ -69,17 +81,39 @@ namespace SoftwareEconomics
             return npv / Convert.ToInt32(dataGridView1.Rows[0].Cells[1].Value); ;
         }
 
-        private double NPV()
+        private double NPV(double i)
         {
             double res = 0.0;
-            for (int i = 0; i < 3; i++)
+            for (int j = 0; j < Convert.ToInt32(dataGridView1.Rows[2].Cells[1].Value); j++)
             {
-                res += CFk(i) / Math.Pow((1 + Convert.ToDouble(dataGridView1.Rows[2].Cells[1].Value) / 100), i + 1);
+                res += CFk(j) / Math.Pow((1 + i / 100), j + 1);
             }
             res -= Convert.ToInt32(dataGridView1.Rows[0].Cells[1].Value);
             return res;
         }
 
+        private double IRR()
+        {
+            for (double i = 0; i < 101; i += 0.0001)
+            {
+                if (NPV(i) < 0.6)
+                {
+                    for (double j = i; j < 101; j+=0.0000001)
+                    {
+                        double res = NPV(j);
+                        /* i npv+ npv-
+                         * 17.1869% 0.14769 -0.0525
+                         * 17.1870736% 0.00018364 -1.6561534
+                         */
+                        if (res < 0.001 && res > -0.001)   
+                        {
+                            return j;
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
         private int CFk(int i)
         {
             return Convert.ToInt32(dataGridView1.Rows[3 + i].Cells[1].Value) -
