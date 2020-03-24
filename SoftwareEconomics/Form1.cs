@@ -71,7 +71,7 @@ namespace SoftwareEconomics
                     year = i - 1;
             }
             //срок окупаемости РВР
-            textBoxResult.Text += "PBP = " + (year - 1 + Math.Abs(Convert.ToDouble(dataGridView2.Rows[2].Cells[year - 1].Value)) / Convert.ToDouble(dataGridView2.Rows[1].Cells[year].Value)).ToString("F" + 2) + Environment.NewLine;
+            textBoxResult.Text += "PBP = " + (year - 1 + Math.Abs(Convert.ToDouble(dataGridView2.Rows[2].Cells[year].Value)) / Convert.ToDouble(dataGridView2.Rows[1].Cells[year + 1].Value)).ToString("F" + 2) + Environment.NewLine;
         }
 
         private double PI()
