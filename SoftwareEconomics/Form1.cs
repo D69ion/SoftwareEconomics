@@ -23,7 +23,32 @@ namespace SoftwareEconomics
             FillTable21();
             double s = Math.Round(Convert.ToInt32(dataGridView1.Rows[0].Cells[1].Value) * 0.05, 2);
             FillTable22(s);
+            int a = Convert.ToInt32(dataGridView3.Rows[4].Cells[1].Value),
+                b = Convert.ToInt32(dataGridView4.Rows[4].Cells[1].Value);
+            double x0 = Math.Ceiling(a / (s - b));
+            textBox1.Text += string.Format("В течение месяца фирме необходимо подготовить и продать миниммум {0} копий " +
+                "программного продукта по цене {1} руб., чтобы окупить постоянные и переменные расходыв рамках " +
+                "ее деятельности на создание программного продукта" + Environment.NewLine + Environment.NewLine, x0, s);
 
+            int xp = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
+            double sm = Math.Round((double)(a + b * xp) / xp, 2);
+            double discount = Math.Round((1 - sm / s) * 100, 2);
+            textBox1.Text += string.Format("При гарантированном объеме рынка продаж в количестве {0} копий цена " +
+                "тиражируемого продукта может быть снижена относительно начальной до {1} руб. за копию, что " +
+                "позволяет установить скидку покупателю в размере {2}%" + Environment.NewLine + Environment.NewLine, xp, sm, discount);
+
+            int pd = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value) * 1000;
+            int xd = (int)Math.Ceiling((pd + a) / (s - b));
+            textBox1.Text += string.Format("Объем продаж для получения дополнительной прибыли в размере {0} тыс. " +
+                "рублей составляет {1} копий продукта в месяц при условии, что постоянные и переменные издержки фирмы неизменны" +
+                Environment.NewLine + Environment.NewLine, pd, xd);
+
+            int xn = (int)Math.Ceiling((Convert.ToInt32(dataGridView1.Rows[1].Cells[1].Value) * a) / (s - b));
+            int Cok = (int)Math.Ceiling(xn / x0);
+            textBox1.Text += string.Format("Срок окупаемости проекта при продаже не менее {0} копий продукта в месяц " +
+                "(точка безубыточности) и рыночной стоимости {1} руб. за копию составит {2} месяцев." + Environment.NewLine +
+                "Для того чтобы окупить все расходы на реализацию проекта, необходимо продать {3} копий программного продукта" +
+                Environment.NewLine, x0, s, Cok, xn);
         }
 
         private void FillTable21()
@@ -63,8 +88,8 @@ namespace SoftwareEconomics
         {
             dataGridView1.RowCount = 3;
             dataGridView1.Rows[0].Cells[0].Value = "Размер кредита";
-            dataGridView1.Rows[0].Cells[1].Value = 1000;
-            dataGridView1.Rows[1].Cells[0].Value = "Срок выплаты";
+            dataGridView1.Rows[0].Cells[1].Value = 1194206;
+            dataGridView1.Rows[1].Cells[0].Value = "Срок кредита";
             dataGridView1.Rows[1].Cells[1].Value = 15;
             dataGridView1.Rows[2].Cells[0].Value = "% годовых";
             dataGridView1.Rows[2].Cells[1].Value = 15;
