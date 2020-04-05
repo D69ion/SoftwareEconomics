@@ -135,7 +135,7 @@
             this.dataGridViewTextBoxColumn2});
             this.dataGridView2.Location = new System.Drawing.Point(12, 183);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(298, 247);
+            this.dataGridView2.Size = new System.Drawing.Size(298, 245);
             this.dataGridView2.TabIndex = 8;
             // 
             // dataGridViewTextBoxColumn1
@@ -158,7 +158,7 @@
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4});
-            this.dataGridView3.Location = new System.Drawing.Point(365, 59);
+            this.dataGridView3.Location = new System.Drawing.Point(316, 59);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.Size = new System.Drawing.Size(298, 93);
             this.dataGridView3.TabIndex = 9;
@@ -183,7 +183,7 @@
             this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6});
-            this.dataGridView4.Location = new System.Drawing.Point(365, 183);
+            this.dataGridView4.Location = new System.Drawing.Point(316, 183);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.Size = new System.Drawing.Size(298, 93);
             this.dataGridView4.TabIndex = 10;
@@ -208,7 +208,7 @@
             this.dataGridView5.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn7,
             this.dataGridViewTextBoxColumn8});
-            this.dataGridView5.Location = new System.Drawing.Point(365, 306);
+            this.dataGridView5.Location = new System.Drawing.Point(316, 306);
             this.dataGridView5.Name = "dataGridView5";
             this.dataGridView5.Size = new System.Drawing.Size(298, 76);
             this.dataGridView5.TabIndex = 11;
@@ -229,7 +229,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(362, 290);
+            this.label4.Location = new System.Drawing.Point(316, 290);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(152, 13);
             this.label4.TabIndex = 12;
@@ -237,7 +237,7 @@
             // 
             // textBoxResult
             // 
-            this.textBoxResult.Location = new System.Drawing.Point(365, 398);
+            this.textBoxResult.Location = new System.Drawing.Point(316, 388);
             this.textBoxResult.Multiline = true;
             this.textBoxResult.Name = "textBoxResult";
             this.textBoxResult.Size = new System.Drawing.Size(298, 112);
@@ -247,7 +247,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 522);
+            this.ClientSize = new System.Drawing.Size(627, 512);
             this.Controls.Add(this.textBoxResult);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dataGridView5);

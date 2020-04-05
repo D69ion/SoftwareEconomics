@@ -19,7 +19,6 @@ namespace SoftwareEconomics
         }
         private void buttonCalc_Click(object sender, EventArgs e)
         {
-            //label2.Text = dataGridView1.Rows[3].Cells[0].Value.ToString();
             CreateDataGrids();
             int pz = 0;
             for (int i = 0; i < 13; i++)
@@ -52,9 +51,6 @@ namespace SoftwareEconomics
             //коэффициент варианта
             double k = Convert.ToDouble(textBox1.Text) / 100.0 + 1.0;
             //заполнение статистики организации
-            //dataGridView1.Rows[0].Cells[0].Value = "";
-            //dataGridView1.Rows[0].Cells[1].Value = Math.Round(*k);
-
             dataGridView1.RowCount = 4;
             dataGridView1.Rows[0].Cells[0].Value = "Кол-во ПК в организации";
             dataGridView1.Rows[0].Cells[1].Value = Math.Floor(150 * k);
@@ -73,7 +69,6 @@ namespace SoftwareEconomics
             dataGridView2.Rows[2].Cells[0].Value = "Затраты на комплектующие";
             dataGridView2.Rows[2].Cells[1].Value = Math.Round(130000 * k, 2);
             dataGridView2.Rows[3].Cells[0].Value = "Затраты на зарплату персонала по категориям";
-            //dataGridView2.Rows[3].Cells[1].Value = Math.Round(*k);
             dataGridView2.Rows[4].Cells[0].Value = "Системный администратор - 1 ед.";
             dataGridView2.Rows[4].Cells[1].Value = Math.Round(190000 * k, 2);
             dataGridView2.Rows[5].Cells[0].Value = "ИТ- менеджер - 1 ед.";
@@ -117,7 +112,8 @@ namespace SoftwareEconomics
             dataGridView5.Rows[0].Cells[0].Value = "Часовая оплата пользователя, руб./ч, ЧОп";
             dataGridView5.Rows[0].Cells[1].Value = (Convert.ToDouble(dataGridView3.Rows[1].Cells[1].Value) / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value)).ToString("F" + 2);
             dataGridView5.Rows[1].Cells[0].Value = "Доход на каждого работника, руб./ч, Чд";
-            dataGridView5.Rows[1].Cells[1].Value = (Convert.ToDouble(dataGridView4.Rows[3].Cells[1].Value) / 12.0 / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value) / Convert.ToDouble(dataGridView3.Rows[0].Cells[1].Value)).ToString("F" + 2);
+            dataGridView5.Rows[1].Cells[1].Value = (Convert.ToDouble(dataGridView4.Rows[3].Cells[1].Value) / 12.0 / Convert.ToDouble(dataGridView3.Rows[2].Cells[1].Value) / 
+                Convert.ToDouble(dataGridView3.Rows[0].Cells[1].Value)).ToString("F" + 2);
             dataGridView5.Rows[2].Cells[0].Value = "Простои, часов в год, Гп";
             dataGridView5.Rows[2].Cells[1].Value = Convert.ToInt32(dataGridView4.Rows[0].Cells[1].Value) * Convert.ToInt32(dataGridView4.Rows[1].Cells[1].Value) * 12;
         }
