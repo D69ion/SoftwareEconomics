@@ -52,7 +52,7 @@ namespace SoftwareEconomics
             int Zop = (int)Math.Floor(Convert.ToInt32(dataGridView1.Rows[1].Cells[1].Value) / 2 * 0.0095);
             int Sop = (int)Math.Round(Zop * Convert.ToInt32(dataGridView1.Rows[1].Cells[1].Value) / 2 * Convert.ToInt32(dataGridView1.Rows[8].Cells[1].Value) * 0.85);
             int S = Sop + Convert.ToInt32(dataGridView5.Rows[4].Cells[4].Value);
-            FillFinalTable(S);
+            FillFinalTable(S, min);
         }
 
         private void CalcSalaryFund(int T, int Z, int D)
@@ -62,7 +62,7 @@ namespace SoftwareEconomics
             FillTable110();
         }
 
-        private void FillFinalTable(int S)
+        private void FillFinalTable(int S, int min)
         {
             //таб 1.11
             dataGridView6.RowCount = 11;
@@ -80,7 +80,7 @@ namespace SoftwareEconomics
 
             dataGridView6.Rows[0].Cells[1].Value = S;
             dataGridView6.Rows[1].Cells[1].Value = Math.Round(S * 0.3, 2);
-            dataGridView6.Rows[2].Cells[1].Value = 0;//уточнить
+            dataGridView6.Rows[2].Cells[1].Value = Convert.ToInt32(dataGridView2.Rows[min].Cells[3].Value) * 20000;//уточнить
             dataGridView6.Rows[3].Cells[1].Value = 1000 * Convert.ToInt32(dataGridView1.Rows[1].Cells[1].Value);
             dataGridView6.Rows[4].Cells[1].Value = 500 * Convert.ToInt32(dataGridView1.Rows[1].Cells[1].Value);
             dataGridView6.Rows[5].Cells[1].Value = Convert.ToInt32(dataGridView6.Rows[0].Cells[1].Value) + Convert.ToInt32(dataGridView6.Rows[1].Cells[1].Value) +
@@ -91,7 +91,7 @@ namespace SoftwareEconomics
             dataGridView6.Rows[8].Cells[1].Value = Math.Round(Convert.ToDouble(dataGridView6.Rows[5].Cells[1].Value) + Convert.ToDouble(dataGridView6.Rows[6].Cells[1].Value) +
                 Convert.ToDouble(dataGridView6.Rows[7].Cells[1].Value), 2);
             dataGridView6.Rows[9].Cells[1].Value = Math.Round(Convert.ToDouble(dataGridView6.Rows[8].Cells[1].Value) * 0.18, 2);
-            dataGridView6.Rows[10].Cells[1].Value = Math.Round(Convert.ToDouble(dataGridView6.Rows[8].Cells[1].Value) + Convert.ToDouble(dataGridView6.Rows[9].Cells[1].Value), 2);
+            dataGridView6.Rows[10].Cells[1].Value = Math.Round(Convert.ToDouble(dataGridView6.Rows[8].Cells[1].Value) + Convert.ToDouble(dataGridView6.Rows[9].Cells[1].Value));
 
         }
 
