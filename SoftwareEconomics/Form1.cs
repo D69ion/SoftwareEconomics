@@ -30,7 +30,7 @@ namespace SoftwareEconomics
             CalcSecondTable(npv);
 
             //IRR
-            textBoxResult.Text += "IRR = " + (IRR() * 100).ToString("F" + 2) + '%'; //Math.Round(IRR(), 7);
+            textBoxResult.Text += "IRR = " + (IRR() * 100).ToString("F" + 2) + '%';
 
             //построение графика
             FillChart();
@@ -50,7 +50,6 @@ namespace SoftwareEconomics
 
         private void CalcSecondTable(double npv)
         {
-            //заполнение второй таблицы
             //0 год
             dataGridView2.Rows[0].Cells[1].Value = dataGridView2.Rows[1].Cells[1].Value = dataGridView2.Rows[2].Cells[1].Value = -Convert.ToInt32(dataGridView1.Rows[0].Cells[1].Value);
             //1 год
@@ -121,11 +120,6 @@ namespace SoftwareEconomics
 
         private void CreateDataGridTable()
         {
-            /*
-            dataGridView1.RowCount = 8;
-            dataGridView1.Rows[0].Cells[0].Value = "";
-            dataGridView1.Rows[0].Cells[1].Value = "";
-            */
             //вторая таблица
             dataGridView1.RowCount = 9;
             dataGridView1.Rows[0].Cells[0].Value = "Стартовые инвестиции, Ic";
@@ -148,7 +142,7 @@ namespace SoftwareEconomics
             dataGridView1.Rows[8].Cells[1].Value = 10000;
             //вторая таблица
             dataGridView2.RowCount = 3;
-            dataGridView2.ColumnCount = 1; //Convert.ToInt32(dataGridView1.Rows[2].Cells[1].Value) + 1;
+            dataGridView2.ColumnCount = 1;
             dataGridView2.Rows[0].Cells[0].Value = "Денежный поток";
             dataGridView2.Rows[1].Cells[0].Value = "Дисконтированный денежный поток";
             dataGridView2.Rows[2].Cells[0].Value = "Накопленный денежный поток";
